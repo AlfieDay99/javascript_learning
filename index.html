@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Concepts Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .output {
+            background-color: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            min-height: 20px;
+        }
+        pre {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        .advanced {
+            border-left: 4px solid #ff9800;
+        }
+        .tricky {
+            border-left: 4px solid #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript Concepts Demo</h1>
+
+    <!-- Basic Concepts -->
+    <h2>Basic Concepts</h2>
+
+    <!-- Scope Section -->
+    <div class="section">
+        <h2>🔹 Scope</h2>
+        <h3>Global vs Local Variables</h3>
+        <button onclick="testScope()">Test Scope</button>
+        <div class="output" id="scopeOutput"></div>
+        <pre>
+var globalVar = "I'm global!";
+
+function testScope() {
+    var localVar = "I'm local!";
+    console.log(globalVar); // ✅ Can access globalVar
+    console.log(localVar);  // ✅ Can access localVar
+}
+        </pre>
+    </div>
+
+    <!-- this Keyword Section -->
+    <div class="section">
+        <h2>🔹 this Keyword</h2>
+        <h3>Different Contexts</h3>
+        <button onclick="testThis()">Test this</button>
+        <div class="output" id="thisOutput"></div>
+        <pre>
+// Global context
+console.log(this); // In browser: refers to `window` object
+
+// Regular function
+function regularFunc() {
+    console.log("Regular Function:", this);
+}
+
+// Arrow function
+const arrowFunc = () => {
+    console.log("Arrow Function:", this);
+};
+
+// Constructor function
+function Person(name) {
+    this.name = name;
+    console.log("Constructor `this`:", this);
+}
+        </pre>
+    </div>
+
+    <!-- new Keyword Section -->
+    <div class="section">
+        <h2>🔹 new Keyword</h2>
+        <h3>Constructor Functions</h3>
+        <button onclick="testNew()">Test new</button>
+        <div class="output" id="newOutput"></div>
+        <pre>
+function CustomEvent(name) {
+    this.name = name;
+    this.type = "custom";
+}
+
+const evt = new CustomEvent("MyEvent");
+console.log(evt);
+        </pre>
+    </div>
+
+    <!-- Closures Section -->
+    <div class="section">
+        <h2>🔹 Closures</h2>
+        <h3>Loop with setTimeout</h3>
+        <button onclick="testClosure()">Test Closure</button>
+        <div class="output" id="closureOutput"></div>
+        <pre>
+// Using var (problematic)
+for (var i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log("var loop:", i);
+    }, 1000);
+}
+
+// Using let (correct)
+for (let j = 0; j < 3; j++) {
+    setTimeout(function() {
+        console.log("let loop:", j);
+    }, 1000);
+}
+
+// Using closure with var
+for (var i = 0; i < 3; i++) {
+    (function(x) {
+        setTimeout(function() {
+            console.log("closure with var:", x);
+        }, 1000);
+    })(i);
+}
+        </pre>
+    </div>
+
+    <!-- Advanced Concepts -->
+    <h2>Advanced Concepts</h2>
+
+    <!-- Hoisting Section -->
+    <div class="section advanced">
+        <h2>🔹 Hoisting</h2>
+        <button onclick="hoistingExample()">Test Hoisting</button>
+        <div class="output" id="hoistingOutput"></div>
+        <pre>
+var globalVar = "I'm global!";
+
+function hoistingExample() {
+    console.log(globalVar); // undefined
+    var globalVar = "I'm local!";
+    console.log(globalVar); // "I'm local!"
+}
+        </pre>
+    </div>
+
+    <!-- Let vs Var in Loops Section -->
+    <div class="section advanced">
+        <h2>🔹 Let vs Var in Loops</h2>
+        <button onclick="loopScopeExample()">Test Loop Scope</button>
+        <div class="output" id="loopScopeOutput"></div>
+        <pre>
+function loopScopeExample() {
+    for (var i = 0; i < 3; i++) {
+        setTimeout(() => console.log("var i:", i), 100);
+    }
+
+    for (let j = 0; j < 3; j++) {
+        setTimeout(() => console.log("let j:", j), 100);
+    }
+}
+        </pre>
+    </div>
+
+    <!-- Arrow vs Regular Function Section -->
+    <div class="section advanced">
+        <h2>🔹 Arrow vs Regular Function</h2>
+        <button onclick="arrowVsRegularThis()">Test this Binding</button>
+        <div class="output" id="arrowVsRegularOutput"></div>
+        <pre>
+const arrowVsRegularThis = {
+    name: "TestObject",
+    regular: function() {
+        console.log("Regular this:", this.name);
+    },
+    arrow: () => {
+        console.log("Arrow this:", this.name);
+    }
+};
+        </pre>
+    </div>
+
+    <!-- Constructor vs Normal Section -->
+    <div class="section advanced">
+        <h2>🔹 Constructor vs Normal</h2>
+        <button onclick="constructorVsNormalThis()">Test Constructor</button>
+        <div class="output" id="constructorVsNormalOutput"></div>
+        <pre>
+function ExampleFunc() {
+    this.value = "Constructor";
+    console.log(this);
+}
+        </pre>
+    </div>
+
+    <!-- Closure Counter Section -->
+    <div class="section advanced">
+        <h2>🔹 Closure Counter</h2>
+        <button onclick="testClickCounter()">Test Click Counter</button>
+        <div class="output" id="clickCounterOutput"></div>
+        <pre>
+function clickCounter() {
+    let count = 0;
+    return function() {
+        count++;
+        console.log("Click count:", count);
+    };
+}
+        </pre>
+    </div>
+
+    <!-- Closure Fix with IIFE Section -->
+    <div class="section advanced">
+        <h2>🔹 Closure Fix with IIFE</h2>
+        <button onclick="closureFixWithIIFE()">Test IIFE Fix</button>
+        <div class="output" id="closureFixOutput"></div>
+        <pre>
+function closureFixWithIIFE() {
+    for (var i = 0; i < 3; i++) {
+        (function(index) {
+            setTimeout(() => {
+                console.log("Index:", index);
+            }, 100);
+        })(i);
+    }
+}
+        </pre>
+    </div>
+
+    <!-- Global vs Local Scope Section -->
+    <div class="section advanced">
+        <h2>🔹 Global vs Local Scope</h2>
+        <button onclick="scopeExample()">Test Scope Shadowing</button>
+        <div class="output" id="scopeExampleOutput"></div>
+        <pre>
+var globalNum = 5;
+
+function scopeExample() {
+    var globalNum = 10; // local scope shadows the global one
+    console.log("Inside function:", globalNum);
+}
+
+scopeExample();       // 10
+console.log("Outside function:", globalNum); // 5
+        </pre>
+    </div>
+
+    <!-- Lexical this in Arrow Functions Section -->
+    <div class="section advanced">
+        <h2>🔹 Lexical this in Arrow Functions</h2>
+        <button onclick="arrowPreservesThis()">Test Lexical this</button>
+        <div class="output" id="arrowLexicalOutput"></div>
+        <pre>
+function arrowPreservesThis() {
+    this.name = "LexicalThis";
+    
+    setTimeout(() => {
+        console.log("Arrow this.name:", this.name); // LexicalThis
+    }, 100);
+}
+        </pre>
+    </div>
+
+    <!-- Custom Constructor Section -->
+    <div class="section advanced">
+        <h2>🔹 Custom Constructor</h2>
+        <button onclick="new CustomEventConstructor('UserClick')">Test Constructor</button>
+        <div class="output" id="customConstructorOutput"></div>
+        <pre>
+function CustomEventConstructor(name) {
+    this.name = name;
+    this.timestamp = Date.now();
+}
+
+const myEvent = new CustomEventConstructor("UserClick");
+console.log(myEvent);
+// { name: "UserClick", timestamp: 168xxxxxx }
+        </pre>
+    </div>
+
+    <h2>Tricky JavaScript Examples</h2>
+    
+    <!-- Equality Gotchas -->
+    <div class="section tricky">
+        <h2>🔹 Equality Gotchas</h2>
+        <button onclick="equalityGotchas()">Test Equality</button>
+        <div class="output" id="equalityOutput"></div>
+        <pre>
+// == vs ===
+console.log(1 == "1");    // true (type coercion)
+console.log(1 === "1");   // false (strict equality)
+
+// null and undefined
+console.log(null == undefined);  // true
+console.log(null === undefined); // false
+
+// NaN comparison
+console.log(NaN == NaN);  // false
+console.log(NaN === NaN); // false
+
+// Object reference comparison
+const obj1 = { value: 1 };
+const obj2 = { value: 1 };
+console.log(obj1 == obj2);  // false
+console.log(obj1 === obj2); // false
+        </pre>
+    </div>
+
+    <!-- Async/Await Gotchas -->
+    <div class="section tricky">
+        <h2>🔹 Async/Await Gotchas</h2>
+        <button onclick="asyncGotchas()">Test Async</button>
+        <div class="output" id="asyncOutput"></div>
+        <pre>
+// Unhandled Promise rejection
+const unhandledPromise = new Promise((resolve, reject) => {
+    reject(new Error("This error won't be caught!"));
+});
+
+// Forgetting to await
+async function forgotAwait() {
+    const promise = new Promise(resolve => 
+        setTimeout(() => resolve("Done!"), 1000)
+    );
+    const result = promise; // Forgot await!
+    console.log("Forgot await:", result); // Shows Promise object
+}
+
+// Promise.all vs Promise.allSettled
+const promises = [
+    Promise.resolve("Success 1"),
+    Promise.reject("Error 1"),
+    Promise.resolve("Success 2")
+];
+
+Promise.all(promises)
+    .then(results => console.log("Promise.all success:", results))
+    .catch(error => console.log("Promise.all error:", error));
+
+Promise.allSettled(promises)
+    .then(results => console.log("Promise.allSettled:", results));
+        </pre>
+    </div>
+
+    <!-- this Binding Gotchas -->
+    <div class="section tricky">
+        <h2>🔹 this Binding Gotchas</h2>
+        <button onclick="thisBindingGotchas()">Test this Binding</button>
+        <div class="output" id="thisBindingOutput"></div>
+        <pre>
+// Nested functions
+const obj = {
+    name: "Outer",
+    method: function() {
+        console.log("Outer this:", this.name);
+        
+        function inner() {
+            console.log("Inner this:", this.name); // undefined
+        }
+        
+        inner();
+    }
+};
+
+// setTimeout
+const timeoutObj = {
+    name: "Timeout",
+    method: function() {
+        setTimeout(function() {
+            console.log("Timeout this:", this.name); // undefined
+        }, 100);
+    }
+};
+
+// Class methods
+class ExampleClass {
+    constructor() {
+        this.name = "Class";
+    }
+    
+    method() {
+        console.log("Class method this:", this.name);
+    }
+    
+    arrowMethod = () => {
+        console.log("Arrow method this:", this.name);
+    }
+}
+        </pre>
+    </div>
+
+    <!-- Hoisting Gotchas -->
+    <div class="section tricky">
+        <h2>🔹 Hoisting Gotchas</h2>
+        <button onclick="hoistingGotchas()">Test Hoisting</button>
+        <div class="output" id="hoistingGotchasOutput"></div>
+        <pre>
+// Variable hoisting with var
+console.log(hoistedVar); // undefined
+var hoistedVar = "I'm hoisted!";
+
+// Function hoisting
+hoistedFunction(); // Works!
+function hoistedFunction() {
+    console.log("I'm a hoisted function!");
+}
+
+// Temporal Dead Zone
+try {
+    console.log(tdzVar); // ReferenceError
+} catch (error) {
+    console.log("TDZ error:", error.message);
+}
+let tdzVar = "I'm in TDZ";
+
+// Function expressions
+try {
+    notHoisted(); // TypeError
+} catch (error) {
+    console.log("Function expression error:", error.message);
+}
+var notHoisted = function() {
+    console.log("I'm not hoisted!");
+};
+        </pre>
+    </div>
+
+    <!-- Closure Gotchas -->
+    <div class="section tricky">
+        <h2>🔹 Closure Gotchas</h2>
+        <button onclick="closureGotchas()">Test Closures</button>
+        <div class="output" id="closureGotchasOutput"></div>
+        <pre>
+// Closure scope chain
+function outer() {
+    const x = 10;
+    
+    function middle() {
+        const y = 20;
+        
+        function inner() {
+            const z = 30;
+            console.log("Closure chain:", x, y, z);
+        }
+        
+        return inner;
+    }
+    
+    return middle();
+}
+
+// Closure in loops (classic problem)
+for (var i = 0; i < 3; i++) {
+    setTimeout(function() {
+        console.log("var loop:", i); // Always 3
+    }, 100);
+}
+
+// Closure memory leak
+function createLeak() {
+    const largeObject = new Array(1000000).fill('leak');
+    let count = 0;
+    
+    return function() {
+        count++;
+        console.log("Leak count:", count);
+        // largeObject is kept in memory
+    };
+}
+
+// Fixing closure in loops with IIFE
+for (var i = 0; i < 3; i++) {
+    (function(index) {
+        setTimeout(function() {
+            console.log("Fixed timeout:", index);
+        }, 200);
+    })(i);
+}
+        </pre>
+    </div>
+
+    <script src="js/scope.js"></script>
+    <script src="js/this-keyword.js"></script>
+    <script src="js/new-keyword.js"></script>
+    <script src="js/closures.js"></script>
+    <script src="js/advanced/hoisting.js"></script>
+    <script src="js/advanced/loop-scope.js"></script>
+    <script src="js/advanced/arrow-vs-regular.js"></script>
+    <script src="js/advanced/constructor-vs-normal.js"></script>
+    <script src="js/advanced/closure-counter.js"></script>
+    <script src="js/advanced/closure-iife.js"></script>
+    <script src="js/advanced/scope-example.js"></script>
+    <script src="js/advanced/arrow-lexical-this.js"></script>
+    <script src="js/advanced/custom-constructor.js"></script>
+    <script src="js/tricky/equality-gotchas.js"></script>
+    <script src="js/tricky/async-gotchas.js"></script>
+    <script src="js/tricky/this-gotchas.js"></script>
+    <script src="js/tricky/hoisting-gotchas.js"></script>
+    <script src="js/tricky/closure-gotchas.js"></script>
+</body>
+</html> 
